@@ -3,14 +3,14 @@
 int ProcessMudFunctions() {
 
   // -- Handle our server protocols
-  if(!Server->ResetPollDescriptors()) { return PROCESS_FAILED; }
-  if(!Server->ResetFDControllers()) { return PROCESS_FAILED; }
-  if(!Server->SelectAndPoll()) { return PROCESS_FAILED; }
+  if(!System.Server->ResetPollDescriptors()) { return PROCESS_FAILED; }
+  if(!System.Server->ResetFDControllers()) { return PROCESS_FAILED; }
+  if(!System.Server->SelectAndPoll()) { return PROCESS_FAILED; }
   
-  EventManager->processEvents(EV_BEFORE_INPUT);
+  System.EventManager->processEvents(EV_BEFORE_INPUT);
   // -- TODO: add input handling Server call here
   
-  EventManager->processEvents(EV_BEFORE_OUTPUT);
+  System.EventManager->processEvents(EV_BEFORE_OUTPUT);
   // -- TODO: add output handling Server call here
   
   return PROCESS_SUCCESS;
@@ -30,7 +30,7 @@ int MainLoop() {
 
     // --------------------------------------------------------------------------------------------
     // -- process End of Process functions
-    EventManager->processEvents(EV_POST_OUTPUT);
+    System.EventManager->processEvents(EV_POST_OUTPUT);
     // -- TODO: add output handling Server call here (so we send any updates that have occurred before input)
     
     // --------------------------------------------------------------------------------------------
