@@ -145,6 +145,79 @@ void Server::startNewSocket(int ctrl) {
     	return;
 }
 
+bool Server::ReadFromSockets() {
+  std::list<Socket *>::iterator iter, itern;
+  
+  for(iter = System.mSocketList.begin(); iter != System.mSocketList.end(); iter = itern) {
+  	Socket *s = (*iter);
+  	itern = ++iter;
 
+	if(FD_ISSET(s->getFileDescriptor(), &mRead)) {
+		if(!s->Read()) {
+			CloseSocket(s, true);
+		}
+	}
+  	
+  }
+}
 
+bool Server::ProcessInput() {
 
+  	std::list<Socket *>::iterator iter, itern;
+  
+  	for(iter = System.mSocketList.begin(); iter != System.mSocketList.end(); iter = itern) {
+	  	Socket *s = (*iter);
+	  	itern = ++iter;
+
+		if(!s->getInputBuffer().empty()) {
+			// -- handle processing of the input buffer here.
+			// -- here we will attempt to process commands/functions
+		}
+
+		s->clearInputBuffer();
+
+  	}	
+
+	return true;
+}
+
+bool Server::FlushSockets() {
+  std::list<Socket *>::iterator iter, itern;
+  
+  for(iter = System.mSocketList.begin(); iter != System.mSocketList.end(); iter = itern) {
+  	Socket *s = (*iter);
+  	itern = ++iter;
+
+	if(!s->Flush()) {
+		CloseSocket(s, true);
+	}
+  }
+  
+  return true;
+}
+
+void Server::CloseSocket(Socket *s, bool forced) {
+
+	// -- attempt to dump any remaining data to the socket
+	if(!forced) {
+		// -- we don't attempt to trap errors here, if it returns false we just don't
+		// -- care as they were disconnecting anyways.
+		s->Flush();
+	}
+
+	// -- strip the socket from the socket-list
+	System.mSocketList.remove(s);
+	
+	// -- reset the control values for said socket to CLR status.
+	FD_CLR(s->getFileDescriptor(), &mRead);
+	FD_CLR(s->getFileDescriptor(), &mWrite);
+	FD_CLR(s->getFileDescriptor(), &mError);
+
+	// -- handle accounts/players here
+	
+	// -- close out the descriptor
+	close(s->getFileDescriptor());
+	
+	// -- delete the actual socket-data (kill any lingering data)
+	delete s;
+}
