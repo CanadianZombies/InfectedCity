@@ -12,4 +12,5 @@
 
 
 #include "Server.hpp"
+#include "Socket.hpp"
 #include "Prototypes.hpp"
