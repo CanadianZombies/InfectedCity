@@ -27,7 +27,7 @@ int MainLoop() {
   signal( SIGPIPE, SIG_IGN );    
     
   gettimeofday( &last_time, NULL );    
-  System.CurrentSystemTime = (time_t) last_time.tv_sec; 
+  System.mCurrentSystemTime = (time_t) last_time.tv_sec; 
   
   while((processRetValue = ProcessMudFunctions()) != PROCESS_FAILED) {
 
@@ -70,7 +70,7 @@ int MainLoop() {
       }
     }
     gettimeofday( &last_time, NULL );
-    System.CurrentSystemTime = (time_t) last_time.tv_sec;
+    System.mCurrentSystemTime = (time_t) last_time.tv_sec;
     // --------------------------------------------------------------------------------------------
   } // -- end while loop
   
