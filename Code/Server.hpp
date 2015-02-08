@@ -23,7 +23,11 @@ class Server {
     bool ResetPollDescriptors();
     bool ResetFDControllers();
     bool SelectAndPoll();
+    bool ReadFromSockets();
+    bool ProcessInput();
+    bool FlushSockets();
     
+    void CloseSocket(Socket *s, bool forced);
     void startNewSocket(int ctrl);
 }
 
