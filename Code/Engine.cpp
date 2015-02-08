@@ -31,6 +31,8 @@ int MainLoop() {
     // --------------------------------------------------------------------------------------------
     // -- process End of Process functions
     EventManager->processEvents(EV_POST_OUTPUT);
+    // -- TODO: add output handling Server call here (so we send any updates that have occurred before input)
+    
     // --------------------------------------------------------------------------------------------
     // -- Process time management and system speed adjustments
     // -- Need to figure out a better way to do this
