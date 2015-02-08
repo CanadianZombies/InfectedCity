@@ -22,12 +22,18 @@ int main ( int argc, char **argv )
   
   // -- bootup databases
 
+  System.mServer = new Server();
+  System.mServer->InitiatePort(4000);	// -- default for now.
+
   // -- execute the MainLoop
   mainLoopRetValue = MainLoop();
   
   if(mainLoopRetValue != PROCESS_SUCCESS) {
     return EXIT_FAILURE;
   }
+  
+  // -- unload the rest of the loaded data
+  delete System.mServer;
 
   return EXIT_SUCCESS;
 }
