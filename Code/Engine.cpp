@@ -6,12 +6,15 @@ int ProcessMudFunctions() {
   if(!System.mServer->ResetPollDescriptors()) { return PROCESS_FAILED; }
   if(!System.mServer->ResetFDControllers()) { return PROCESS_FAILED; }
   if(!System.mServer->SelectAndPoll()) { return PROCESS_FAILED; }
+  if(!System.mServer->ReadFromSockets()) { return PROCESS_FAILED; }
   
+  // -- now we focus on handling/process Events before input, and before output
+  // -- so we can have seperate event stylings.
   System.mEventManager->processEvents(EV_BEFORE_INPUT);
-  // -- TODO: add input handling Server call here
+  if(!System.mServer->ProcessInput()) { return PROCESS_FAILED; }
   
   System.mEventManager->processEvents(EV_BEFORE_OUTPUT);
-  // -- TODO: add output handling Server call here
+  if(!System.mServer->FlushSockets()) { return PROCESS_FAILED; }
   
   return PROCESS_SUCCESS;
 }
@@ -31,8 +34,8 @@ int MainLoop() {
     // --------------------------------------------------------------------------------------------
     // -- process End of Process functions
     System.mEventManager->processEvents(EV_POST_OUTPUT);
-    // -- TODO: add output handling Server call here (so we send any updates that have occurred before input)
-    
+    if(!System.mServer->FlushSockets()) { processRetValue = PROCESS_FAILED; }
+
     // --------------------------------------------------------------------------------------------
     // -- Process time management and system speed adjustments
     // -- Need to figure out a better way to do this
