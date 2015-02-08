@@ -14,3 +14,12 @@
 #include "Server.hpp"
 #include "Socket.hpp"
 #include "Prototypes.hpp"
+
+struct SystemData {
+  std::list<Socket *>mSocketList;
+  
+  Server *mServer;
+  EventHandler *mEventManager;
+  
+  time_t mCurrentSystemTime;
+};
