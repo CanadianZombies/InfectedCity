@@ -7,7 +7,7 @@ void EventHandler::BootupEvents()
 	return;
 }
 
-int EventHandler::updateEvents ( void )
+int EventHandler::processEvents ( int ev_type )
 {
 	std::list<Event *>::iterator iter, iter_next;
 	try {
@@ -15,6 +15,11 @@ int EventHandler::updateEvents ( void )
 		for ( iter = mEventList.begin(); iter != mEventList.end(); iter = iter_next ) {
 			Event *ev = ( *iter );
 			iter_next = ++iter;
+			
+			// -- only process if the ev_type is the right one.
+			if(ev->getType() != ev_type)
+			{ continue; }
+			
 			// no fancy --/++ counters like in most systems; here we use
 			// just a simple raw check to see how many seconds have passed
 			// min of 0 seconds, max of, well, allot.  Either way, we can be
