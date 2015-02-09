@@ -7,7 +7,7 @@
 	public: \
 	EventClass() { }; \
 	~EventClass() { }; \
-	void Execute(void) \
+	void Execute(void) 
 
 class Event
 {
@@ -78,7 +78,7 @@ class EventHandler
 		std::list<Event *>::iterator getFirst() { return mEventList.begin(); }
 		std::list<Event *>::iterator getLast() { return mEventList.end(); }
 		void BootupEvents();
-		int updateEvents ( void );
+		int processEvents ( int ev_type );
 		void destroyEvents ( void );
 		void destroyEvent ( Event *ev );
 		Event *addEvent ( Event *ev, bool repeat, double seconds ); // return the event so we can store certain events easily
