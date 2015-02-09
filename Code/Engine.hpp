@@ -13,6 +13,7 @@
 
 #include "Server.hpp"
 #include "Socket.hpp"
+#include "EventHandler.hpp"
 #include "Prototypes.hpp"
 
 struct SystemData {
