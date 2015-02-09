@@ -9,6 +9,8 @@
 	~EventClass() { }; \
 	void Execute(void) 
 
+typedef enum { EV_BEFORE_INPUT, EV_BEFORE_OUTPUT, EV_POST_OUTPUT } event_types;
+
 class Event
 {
 	public:
