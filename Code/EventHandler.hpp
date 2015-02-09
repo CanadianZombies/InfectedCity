@@ -84,7 +84,7 @@ class EventHandler
 		void destroyEvents ( void );
 		void destroyEvent ( Event *ev );
 		Event *addEvent ( Event *ev, bool repeat, double seconds ); // return the event so we can store certain events easily
-
+		Event *addEvent ( Event *ev, bool repeat, double seconds, int ev_type );
 };
 
 #endif
