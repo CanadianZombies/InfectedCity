@@ -55,7 +55,7 @@ bool Server::InitiatePort(int portNum) {
 	{
 		// -- TODO: insert logging mechanism
 		close(fd);	
-		exit(1);    
+		return false;  
 	}
 	mControl = fd;
 	return true;
