@@ -178,6 +178,29 @@ void EventHandler::reportEvents ( Creature *c )
 	return;
 }
 
+Event *EventHandler::addEvent ( Event *ev, bool repeat, double seconds, int ev_type )
+{
+	std::list<Event *>::iterator iter, iter_next;
+
+	for ( iter = mEventList.begin(); iter != mEventList.end(); iter = iter_next ) {
+		Event *e = ( *iter );
+		iter_next = ++iter;
+		// already in the event list!
+		if ( e == ev ) {
+			return ev;
+		}
+	}
+	// should we reach this point in time.
+	mEventList.push_back ( ev );
+	ev->setRestart ( repeat );
+	ev->setSeconds ( seconds );
+	ev->setInitTime ( time ( NULL ) );
+	ev->setType ( ev_type );
+
+	// -- ensure we log everything!
+	log_hd ( LOG_DEBUG, Format ( "New Event: %p / Repeats: %s / Seconds till Execution: %ld", ev, repeat ? "yes" : "no", seconds ) );
+	return ev;
+}
 Event *EventHandler::addEvent ( Event *ev, bool repeat, double seconds )
 {
 	std::list<Event *>::iterator iter, iter_next;
@@ -195,7 +218,7 @@ Event *EventHandler::addEvent ( Event *ev, bool repeat, double seconds )
 	ev->setRestart ( repeat );
 	ev->setSeconds ( seconds );
 	ev->setInitTime ( time ( NULL ) );
-	ev->setType ( EV_CPP );
+	ev->setType ( EV_BEFORE_OUTPUT );
 
 	// -- ensure we log everything!
 	log_hd ( LOG_DEBUG, Format ( "New Event: %p / Repeats: %s / Seconds till Execution: %ld", ev, repeat ? "yes" : "no", seconds ) );
