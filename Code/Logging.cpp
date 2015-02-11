@@ -147,15 +147,13 @@ void _log_hd ( long logFlag, const char *mFile, const char *mFunction, int mLine
 		};
 
 		const struct Log_types log_table[] = {
-/*    To be added as we develop further!
-      {"log",         "Log: Basic",    "\a[F542]",    LOG_BASIC,          CF_SEE_LOGS},
+			{"log",         "Log: Basic",    "\a[F542]",    LOG_BASIC,          CF_SEE_LOGS},
 			{"error",       "Log: Error",    "\a[F500]",    LOG_ERROR,          CF_SEE_BUGS},
 			{"security",    "Log: Security", "\a[F213]",    LOG_SECURITY,       CF_SEE_SECURITY},
 			{"commands",    "Log: Command",  "\a[F455]",    LOG_COMMAND,        CF_SEE_COMMANDS},
 			{"debug",       "Log: Debug",    "\a[F343]",    LOG_DEBUG,          CF_SEE_DEBUG},
 			{"script",	"Log: Script",	 "\a[F535]",    LOG_SCRIPT,         CF_SEE_SCRIPT},
 			{"suicide",	"Log: Suicide",  "\a[F500]",    LOG_SUICIDE,          CF_SEE_ABORT},
-*/
 			{NULL, NULL, NULL, -1, -1 },
 		};
 
